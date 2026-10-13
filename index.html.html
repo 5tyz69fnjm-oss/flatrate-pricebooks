@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlatRate Books — Electrician Flat-Rate Price Book ($99, one-time)</title>
+<meta name="description" content="A 2026-NEC-aligned flat-rate price book for residential electricians. 250+ pre-priced services. One-time $99 — no subscription. Launching soon.">
+<style>
+  :root{
+    --navy:#101f38;
+    --navy-2:#16294a;
+    --amber:#f5a623;
+    --amber-dark:#d98a0b;
+    --ink:#1c2430;
+    --muted:#5b6675;
+    --bg:#f6f7f9;
+    --card:#ffffff;
+    --line:#e3e7ee;
+    --green:#1e7e46;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);background:var(--bg);line-height:1.6;font-size:16px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:640px;margin:0 auto;padding:0 20px}
+  header.site{
+    background:var(--navy);color:#fff;position:sticky;top:0;z-index:10;
+    border-bottom:3px solid var(--amber);
+  }
+  header.site .wrap{display:flex;align-items:center;justify-content:space-between;padding:12px 20px}
+  .brand{font-weight:800;font-size:18px;letter-spacing:.2px}
+  .brand span{color:var(--amber)}
+  .btn{
+    display:inline-block;background:var(--amber);color:#201503;font-weight:800;
+    padding:12px 22px;border-radius:10px;text-decoration:none;border:none;cursor:pointer;
+    font-size:16px;text-align:center;
+  }
+  .btn:hover{background:var(--amber-dark)}
+  .btn.small{padding:9px 16px;font-size:14px}
+  .btn.ghost{background:transparent;color:#fff;border:2px solid var(--amber)}
+  .hero{background:linear-gradient(180deg,var(--navy) 0%,var(--navy-2) 100%);color:#fff;padding:44px 0 40px}
+  .kicker{
+    display:inline-block;background:rgba(245,166,35,.16);color:var(--amber);
+    font-size:12.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
+    padding:6px 12px;border-radius:999px;margin-bottom:16px;border:1px solid rgba(245,166,35,.4);
+  }
+  .hero h1{font-size:30px;line-height:1.2;font-weight:800;margin-bottom:14px}
+  .hero h1 .hl{color:var(--amber)}
+  .hero p.lede{color:#c9d3e2;font-size:17px;margin-bottom:22px}
+  .hero .cta-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .price-note{color:#9fb0c9;font-size:13.5px;margin-top:12px}
+  .price-note strong{color:#fff}
+  section{padding:36px 0}
+  section.alt{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  h2{font-size:23px;font-weight:800;margin-bottom:6px;color:var(--navy)}
+  .sub{color:var(--muted);margin-bottom:20px;font-size:15.5px}
+  .planned-tag{
+    display:inline-block;font-size:12px;font-weight:700;color:var(--amber-dark);
+    background:#fdf3e0;border:1px solid #f3ddae;border-radius:6px;padding:3px 9px;
+    text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;
+  }
+  .pain-card{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--amber);
+    border-radius:10px;padding:16px 18px;margin-bottom:12px}
+  .pain-card p{font-size:15.5px}
+  .pain-card strong{color:var(--navy)}
+  ul.feat{list-style:none;margin:0 0 8px}
+  ul.feat li{
+    background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:14px 16px 14px 46px;margin-bottom:10px;position:relative;font-size:15.5px;
+  }
+  ul.feat li::before{
+    content:"✓";position:absolute;left:16px;top:13px;color:var(--green);
+    font-weight:800;font-size:18px;
+  }
+  ul.feat li strong{color:var(--navy);display:block;font-size:16px}
+  .compare{width:100%;border-collapse:collapse;background:var(--card);border-radius:10px;overflow:hidden;
+    border:1px solid var(--line);font-size:14.5px;margin-top:6px}
+  .compare th,.compare td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  .compare thead th{background:var(--navy);color:#fff;font-size:14px}
+  .compare thead th.ours{background:#0c1830;color:var(--amber)}
+  .compare tr:last-child td{border-bottom:none}
+  .compare td.ours{font-weight:700}
+  .compare .x{color:#b3261e;font-weight:700}
+  .compare .chk{color:var(--green);font-weight:700}
+  .fineprint{font-size:12.5px;color:var(--muted);margin-top:10px}
+  .form-card{background:var(--navy);color:#fff;border-radius:14px;padding:26px 22px;margin-top:6px}
+  .form-card h2{color:#fff}
+  .form-card .sub{color:#c9d3e2}
+  .form-card label{display:block;font-size:14px;font-weight:700;margin:14px 0 6px;color:#dbe4f0}
+  .form-card input{
+    width:100%;padding:13px 14px;border-radius:9px;border:1px solid #33456a;
+    background:#0c1830;color:#fff;font-size:16px;
+  }
+  .form-card input::placeholder{color:#7d8da6}
+  .form-card .btn{width:100%;margin-top:18px}
+  .preview-note{
+    margin-top:14px;font-size:13px;color:#9fb0c9;background:rgba(245,166,35,.08);
+    border:1px dashed rgba(245,166,35,.5);border-radius:8px;padding:10px 12px;
+  }
+  #form-msg{display:none;margin-top:14px;background:#0e2a1a;border:1px solid #2c6e44;color:#bfe6c9;
+    border-radius:8px;padding:12px 14px;font-size:14.5px}
+  details.faq{
+    background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:15px 17px;margin-bottom:10px;
+  }
+  details.faq summary{font-weight:800;color:var(--navy);cursor:pointer;font-size:16px;list-style:none}
+  details.faq summary::-webkit-details-marker{display:none}
+  details.faq summary::after{content:"+";float:right;color:var(--amber-dark);font-size:20px;line-height:1}
+  details.faq[open] summary::after{content:"–"}
+  details.faq p{margin-top:10px;font-size:15px;color:#39424f}
+  footer.site{background:var(--navy);color:#8b99b0;padding:26px 0;font-size:13px}
+  footer.site strong{color:#dbe4f0}
+  footer.site p{margin-bottom:8px}
+  @media(min-width:560px){
+    .hero h1{font-size:36px}
+    h2{font-size:26px}
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <div class="brand">FlatRate<span>Books</span></div>
+    <a class="btn small" href="#notify">Notify me</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <span class="kicker">Launching soon · For residential electricians</span>
+    <h1>Every job you price from gut is <span class="hl">money left on the table.</span></h1>
+    <p class="lede">A 2026-NEC-aligned flat-rate price book with 250+ pre-priced residential services — so you quote fast, quote consistently, and stop undercharging. One-time <strong style="color:#fff">$99</strong>. No subscription. Yours to keep.</p>
+    <div class="cta-row">
+      <a class="btn" href="#notify">Get notified at launch</a>
+    </div>
+    <p class="price-note"><strong>Planned launch price: $99 one-time.</strong> No monthly fee, no per-technician licensing, no losing access if you cancel something.</p>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <h2>The problem with quoting off the top of your head</h2>
+    <p class="sub">You already know this — it's why flat-rate books exist.</p>
+    <div class="pain-card"><p><strong>Inconsistent pricing.</strong> Same panel swap, three different prices depending on the day, the tech, and how rushed the morning was.</p></div>
+    <div class="pain-card"><p><strong>Slow quotes lose jobs.</strong> "I'll get you a number tonight" is where customers go call the next shop.</p></div>
+    <div class="pain-card"><p><strong>Underquoting compounds.</strong> Miss your true labor cost by 15% on every service call and it doesn't feel like much — until you do the year-end math.</p></div>
+    <div class="pain-card"><p><strong>$189/month software isn't the answer either.</strong> That's $2,268 a year, per tech, forever — for a price book you could own outright.</p></div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <span class="planned-tag">Planned contents</span>
+    <h2>What's inside the book</h2>
+    <p class="sub">Built for working electricians — spreadsheet format, because that's what the trade actually uses.</p>
+    <ul class="feat">
+      <li><strong>250+ pre-priced residential services</strong>Panel swaps, EV chargers, recessed lighting, troubleshooting, device replacements, generators, smart-home — each with pre-loaded labor hours and material allowances, aligned with the NEC.</li>
+      <li><strong>Good / Better / Best tiers on every line</strong>Present options instead of a single take-it-or-leave-it number. Option sheets raise average tickets — that's the whole point of flat rate.</li>
+      <li><strong>One settings tab reprices everything</strong>Enter YOUR labor rate, overhead, and target margin once — all 250+ lines recalculate to your market. No Bay-Area pricing forced on a Midwest shop.</li>
+      <li><strong>After-hours &amp; emergency multipliers</strong>Built-in 1.5× / 2× multipliers so nights and weekends price themselves correctly.</li>
+      <li><strong>2026-NEC-aligned</strong>Built against the 2026 code cycle — while the current best-selling book is still 2023-aligned.</li>
+      <li><strong>Formula-driven Excel workbook</strong>Opens in free Google Sheets too. No app to install, no account, no login — it works offline in the truck.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Own it once. Not $189/month, forever.</h2>
+    <p class="sub">The math that matters.</p>
+    <table class="compare">
+      <thead>
+        <tr><th></th><th class="ours">FlatRate Books (planned)</th><th>Leading field-service app</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Price</td><td class="ours">$99 one-time</td><td>$189/mo ($2,268/yr)</td></tr>
+        <tr><td>Per-technician licensing</td><td class="ours"><span class="chk">None</span> — use it on every truck</td><td><span class="x">Extra seats cost extra</span></td></tr>
+        <tr><td>If you stop paying</td><td class="ours"><span class="chk">You keep the book</span></td><td><span class="x">You lose access</span></td></tr>
+        <tr><td>Pre-built electrician price catalog</td><td class="ours"><span class="chk">Yes — 250+ services</span></td><td><span class="x">Build it yourself</span></td></tr>
+        <tr><td>NEC alignment</td><td class="ours"><span class="chk">2026-aligned</span></td><td>N/A (bring your own catalog)</td></tr>
+      </tbody>
+    </table>
+    <p class="fineprint">SaaS pricing shown is the published Essentials-tier rate of the leading field-service app, verified October 2026. One month of it costs nearly twice the planned one-time price of this book.</p>
+  </div>
+</section>
+
+<section class="alt" id="notify">
+  <div class="wrap">
+    <div class="form-card">
+      <span class="planned-tag">Launching soon</span>
+      <h2>Get notified at launch</h2>
+      <p class="sub">Join the launch list — we'll email you the day it goes live, plus early-buyer pricing for list members.</p>
+      <form id="notify-form" novalidate>
+        <label for="f-name">First name</label>
+        <input id="f-name" name="name" type="text" placeholder="Mike" autocomplete="given-name">
+        <label for="f-email">Work email</label>
+        <input id="f-email" name="email" type="email" placeholder="you@yourshop.com" autocomplete="email" required>
+        <button class="btn" type="submit">Notify me at launch</button>
+      </form>
+      <div id="form-msg" role="status"></div>
+      <div id="dfy-ask" style="display:none;margin-top:18px;padding-top:18px;border-top:1px solid rgba(255,255,255,.14)">
+        <p style="font-weight:800;margin:0 0 6px">One quick question while you're here:</p>
+        <p style="margin:0 0 12px;color:#c9d3e2;font-size:15px">Would you rather have the book <strong style="color:#fff">built and calibrated for your shop</strong>, done-for-you? Pilot pricing <strong style="color:#fff">$399</strong> for our first shops.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button type="button" class="btn" id="dfy-yes" style="width:auto;padding:10px 18px">Yes, tell me more</button>
+          <button type="button" id="dfy-no" style="width:auto;padding:10px 18px;background:transparent;border:1px solid #7d8da6;color:#dbe4f0;border-radius:8px;cursor:pointer;font-weight:700">No, I'll do it myself</button>
+        </div>
+        <p id="dfy-msg" role="status" style="display:none;margin-top:12px;font-size:14px;color:#bfe6c9"></p>
+        <!-- WIRING NOTE: when the email form is connected before launch, record dfy-yes / dfy-no clicks per email (email-platform link tracking or a tagged redirect) so DIY vs DFY interest is segmented per contact. -->
+      </div>
+      <p class="preview-note"><strong>Preview note:</strong> this form is not connected to an email list yet — it will be wired up before the test launches. Nothing you enter here is stored or sent anywhere right now.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Straight answers</h2>
+    <p class="sub">The questions every electrician asks.</p>
+
+    <details class="faq" open>
+      <summary>Which NEC edition is it based on?</summary>
+      <p>The book is being built against the <strong>2026 NEC</strong> — Texas already adopted it (effective Sept 1, 2026) and more states are moving. The current best-selling price book is still 2023-aligned.</p>
+      <p>Honest context: labor hours barely move between code cycles — what changes is <em>which</em> code-required items exist (GFCI/AFCI expansion, surge protection, and similar). And because adoption is staggered by state, the settings tab lets you adjust line items to your local amendments. A price book is labor math plus your market — the edition is the starting point, not the whole story.</p>
+    </details>
+
+    <details class="faq">
+      <summary>What format is it? I don't want another app.</summary>
+      <p>It's an <strong>Excel workbook</strong> — formula-driven throughout, and it opens in free Google Sheets. No app to install, no account, no subscription, works offline in the truck. If you've ever built your own spreadsheet for job costing, this will feel familiar — except someone already did the 250-line labor research for you.</p>
+    </details>
+
+    <details class="faq">
+      <summary>When does it launch, and what will it cost?</summary>
+      <p>Launch is planned soon — join the list above and you'll hear first, with early-buyer pricing for list members. The planned price is <strong>$99 one-time</strong>: no monthly fee, no per-tech licensing.</p>
+    </details>
+
+    <details class="faq">
+      <summary>My market's rates aren't the book's rates. Then what?</summary>
+      <p>That's exactly what the settings tab is for. Enter your labor rate, overhead, and margin targets once and every line reprices to your market. The book ships with 2026 national-average calibration as the starting point — your numbers replace it in about two minutes.</p>
+    </details>
+
+    <details class="faq">
+      <summary>Copper prices change weekly. Won't the book go stale?</summary>
+      <p>This is the #1 thing working electricians ask about — and it's why the book is built around the settings tab instead of fixed numbers. When your wire costs move, you update your material costs once and every affected line reprices. You're never locked to the prices from the day the book was written.</p>
+      <p>Planned from the start: the book ships calibrated to 2026 market rates, and the settings tab is the update mechanism — no new edition to buy when copper runs.</p>
+    </details>
+
+    <details class="faq">
+      <summary>I already use field-service software. Why would I need this?</summary>
+      <p>You might not — if your app's price book is already built out and your techs actually use it, you're set. This is for the shops paying $189/month largely for a price catalog they had to build themselves, or the shops still quoting from experience and a spreadsheet. $99 once vs. $2,268 a year is the whole argument.</p>
+    </details>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <p><strong>FlatRate Books</strong> — flat-rate price books for the trades, built to be owned, not rented.</p>
+    <p>This is a launch-interest page for a product in development. Nothing is for sale yet; no payment is collected. Feature descriptions reflect planned contents and launch pricing, which may be adjusted before release.</p>
+    <p>© 2026 FlatRate Books. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var form = document.getElementById('notify-form');
+  var msg  = document.getElementById('form-msg');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var name  = document.getElementById('f-name').value.trim();
+    var email = document.getElementById('f-email').value.trim();
+    if(!email || email.indexOf('@') < 1){
+      msg.style.display = 'block';
+      msg.style.background = '#2a1414';
+      msg.style.borderColor = '#7a2e2e';
+      msg.style.color = '#f0c0c0';
+      msg.textContent = 'Please enter a valid email address.';
+      return;
+    }
+    msg.style.display = 'block';
+    msg.style.background = '#0e2a1a';
+    msg.style.borderColor = '#2c6e44';
+    msg.style.color = '#bfe6c9';
+    msg.textContent = (name ? 'Thanks, ' + name + ' — ' : 'Thanks — ') +
+      "you're on the preview list. Note: this demo form isn't wired to anything yet; " +
+      'it will be connected to the launch email list before the test goes live, and nothing entered here is stored.';
+    form.reset();
+    document.getElementById('dfy-ask').style.display = 'block';
+  });
+  var dfyMsg = document.getElementById('dfy-msg');
+  document.getElementById('dfy-yes').addEventListener('click', function(){
+    dfyMsg.style.display = 'block';
+    dfyMsg.textContent = 'Noted — we\u2019ll reach out about the done-for-you pilot.';
+  });
+  document.getElementById('dfy-no').addEventListener('click', function(){
+    dfyMsg.style.display = 'block';
+    dfyMsg.textContent = 'Got it — you\u2019ll get the $99 book at launch.';
+  });
+  });
+})();
+</script>
+
+</body>
+</html>
