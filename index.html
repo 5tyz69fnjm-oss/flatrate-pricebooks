@@ -209,10 +209,9 @@
           <button type="button" id="dfy-no" style="width:auto;padding:10px 18px;background:transparent;border:1px solid #7d8da6;color:#dbe4f0;border-radius:8px;cursor:pointer;font-weight:700">No, I'll do it myself</button>
         </div>
         <p id="dfy-msg" role="status" style="display:none;margin-top:12px;font-size:14px;color:#bfe6c9"></p>
-        <!-- WIRING NOTE: when the email form is connected before launch, record dfy-yes / dfy-no clicks per email (email-platform link tracking or a tagged redirect) so DIY vs DFY interest is segmented per contact. -->
+        <!-- DFY clicks POST to Formspree tagged with dfy_interest=yes/no plus the captured email, so DIY vs DFY interest segments per contact. -->
       </div>
-      <p class="preview-note"><strong>Preview note:</strong> this form is not connected to an email list yet — it will be wired up before the test launches. Nothing you enter here is stored or sent anywhere right now.</p>
-    </div>
+</div>
   </div>
 </section>
 
@@ -265,40 +264,73 @@
 
 <script>
 (function(){
+  var ENDPOINT = 'https://formspree.io/f/xljgwkay';
   var form = document.getElementById('notify-form');
   var msg  = document.getElementById('form-msg');
+  var dfyMsg = document.getElementById('dfy-msg');
+  var capturedEmail = '';
+  var capturedName = '';
+
+  function showMsg(el, text, ok){
+    el.style.display = 'block';
+    el.style.background = ok ? '#0e2a1a' : '#2a1414';
+    el.style.borderColor = ok ? '#2c6e44' : '#7a2e2e';
+    el.style.color = ok ? '#bfe6c9' : '#f0c0c0';
+    el.textContent = text;
+  }
+
+  function post(data, onOk, onErr){
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data)
+    }).then(function(r){
+      return r.json().then(function(j){ return { status: r.status, body: j }; });
+    }).then(function(res){
+      if(res.status === 200 && res.body.ok){ onOk(); } else { onErr(); }
+    }).catch(function(){ onErr(); });
+  }
+
   form.addEventListener('submit', function(e){
     e.preventDefault();
     var name  = document.getElementById('f-name').value.trim();
     var email = document.getElementById('f-email').value.trim();
     if(!email || email.indexOf('@') < 1){
-      msg.style.display = 'block';
-      msg.style.background = '#2a1414';
-      msg.style.borderColor = '#7a2e2e';
-      msg.style.color = '#f0c0c0';
-      msg.textContent = 'Please enter a valid email address.';
+      showMsg(msg, 'Please enter a valid email address.', false);
       return;
     }
-    msg.style.display = 'block';
-    msg.style.background = '#0e2a1a';
-    msg.style.borderColor = '#2c6e44';
-    msg.style.color = '#bfe6c9';
-    msg.textContent = (name ? 'Thanks, ' + name + ' — ' : 'Thanks — ') +
-      "you're on the preview list. Note: this demo form isn't wired to anything yet; " +
-      'it will be connected to the launch email list before the test goes live, and nothing entered here is stored.';
-    form.reset();
-    document.getElementById('dfy-ask').style.display = 'block';
+    showMsg(msg, 'Joining the launch list\u2026', true);
+    post({ name: name, email: email, _subject: 'FlatRate Books — new launch-list signup' },
+      function(){
+        capturedEmail = email;
+        capturedName = name;
+        showMsg(msg, (name ? 'Thanks, ' + name + ' — ' : 'Thanks — ') +
+          "you're on the launch list. We'll email you the day the book goes live, plus early-buyer pricing.", true);
+        form.reset();
+        document.getElementById('dfy-ask').style.display = 'block';
+      },
+      function(){
+        showMsg(msg, 'Something went wrong — please try again.', false);
+      });
   });
-  var dfyMsg = document.getElementById('dfy-msg');
-  document.getElementById('dfy-yes').addEventListener('click', function(){
-    dfyMsg.style.display = 'block';
-    dfyMsg.textContent = 'Noted — we\u2019ll reach out about the done-for-you pilot.';
-  });
-  document.getElementById('dfy-no').addEventListener('click', function(){
-    dfyMsg.style.display = 'block';
-    dfyMsg.textContent = 'Got it — you\u2019ll get the $99 book at launch.';
-  });
-  });
+
+  function dfy(choice){
+    if(!capturedEmail){ return; }
+    post({ email: capturedEmail, name: capturedName, dfy_interest: choice,
+           _subject: 'FlatRate Books — DFY interest: ' + choice },
+      function(){
+        dfyMsg.style.display = 'block';
+        dfyMsg.textContent = choice === 'yes'
+          ? 'Noted — we\u2019ll reach out about the done-for-you pilot.'
+          : 'Got it — you\u2019ll get the $99 book at launch.';
+      },
+      function(){
+        dfyMsg.style.display = 'block';
+        dfyMsg.textContent = 'Something went wrong — please try again.';
+      });
+  }
+  document.getElementById('dfy-yes').addEventListener('click', function(){ dfy('yes'); });
+  document.getElementById('dfy-no').addEventListener('click', function(){ dfy('no'); });
 })();
 </script>
 
