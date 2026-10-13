@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FlatRate Books — Electrician Flat-Rate Price Book ($99, one-time)</title>
+<title>FlatRate Price Books — Electrician Flat-Rate Price Book ($99, one-time)</title>
 <meta name="description" content="A 2026-NEC-aligned flat-rate price book for residential electricians. 250+ pre-priced services. One-time $99 — no subscription. Launching soon.">
 <style>
   :root{
@@ -123,7 +123,7 @@
 
 <header class="site">
   <div class="wrap">
-    <div class="brand">FlatRate<span>Books</span></div>
+    <div class="brand">FlatRate<span> Price Books</span></div>
     <a class="btn small" href="#notify">Notify me</a>
   </div>
 </header>
@@ -173,7 +173,7 @@
     <p class="sub">The math that matters.</p>
     <table class="compare">
       <thead>
-        <tr><th></th><th class="ours">FlatRate Books (planned)</th><th>Leading field-service app</th></tr>
+        <tr><th></th><th class="ours">FlatRate Price Books (planned)</th><th>Leading field-service app</th></tr>
       </thead>
       <tbody>
         <tr><td>Price</td><td class="ours">$99 one-time</td><td>$189/mo ($2,268/yr)</td></tr>
@@ -300,7 +300,7 @@
       return;
     }
     showMsg(msg, 'Joining the launch list\u2026', true);
-    post({ name: name, email: email, _subject: 'FlatRate Books — new launch-list signup' },
+    post({ name: name, email: email, _subject: 'FlatRate Price Books — new launch-list signup' },
       function(){
         capturedEmail = email;
         capturedName = name;
@@ -317,7 +317,7 @@
   function dfy(choice){
     if(!capturedEmail){ return; }
     post({ email: capturedEmail, name: capturedName, dfy_interest: choice,
-           _subject: 'FlatRate Books — DFY interest: ' + choice },
+           _subject: 'FlatRate Price Books — DFY interest: ' + choice },
       function(){
         dfyMsg.style.display = 'block';
         dfyMsg.textContent = choice === 'yes'
